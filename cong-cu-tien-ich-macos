@@ -1,0 +1,13 @@
+cong-cu-tien-ich-macos
+└── cong-cu-tien-ich-macos
+    ├── src  # Thư mục chứa mã nguồn chính
+    │   ├── __main__.py  # Điểm khởi đầu của ứng dụng
+    │   ├── gui  # Chứa các file liên quan đến giao diện người dùng
+    │   │   ├── __init__.py
+    │   │   └── cua_so_chinh.py  # Định nghĩa cửa sổ chính của ứng dụng
+    │   └── core  # Chứa logic xử lý cốt lõi
+    │       ├── __init__.py
+    │       ├── thao_tac_tep.py  # Chứa các hàm xử lý file và thư mục
+    │       └── lenh_he_thong.py # Chứa các hàm thực thi lệnh hệ thống
+    ├── requirements.txt  # Liệt kê các thư viện Python cần thiết
+    └── README.md  # File hướng dẫn về dự án

@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install/Update Dependencies",
+            "type": "shell",
+            // Dùng đúng trình thông dịch python của venv để cài đặt
+            "command": "${command:python.interpreterPath} -m pip install -r requirements.txt",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean Cache",
+            "type": "shell",
+            "command": "find . -path '*/__pycache__*' -delete && find . -name '*.pyc' -delete",
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    // --- Cấu hình cho Python ---
+    // Tự động trỏ đến môi trường ảo (venv) của dự án
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
+    // Tự động kích hoạt môi trường ảo khi mở Terminal
+    "python.terminal.activateEnvironment": true,
+
+    // --- Tự động Format Code ---
+    // Sử dụng 'black' để format code
+    "python.formatting.provider": "black",
+    // Tự động format khi lưu tệp
+    "editor.formatOnSave": true,
+
+    // --- Kiểm tra lỗi (Linting) ---
+    // Bật tính năng kiểm tra lỗi
+    "python.linting.enabled": true,
+    // Sử dụng 'pylint' để kiểm tra
+    "python.linting.pylintEnabled": true,
+
+    // --- Giao diện và hiệu suất ---
+    // Ẩn các tệp/thư mục không cần thiết khỏi cây thư mục
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.git": true,
+        "**/.venv": true,
+        "venv": true,
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/build": true
+    },
+    "editor.rulers": [88] // Thêm một đường kẻ ở cột 88 để giới hạn độ dài dòng
+}
