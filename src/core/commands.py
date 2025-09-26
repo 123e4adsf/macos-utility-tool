@@ -93,6 +93,27 @@ def create_virtual_environment():
             "source venv/bin/activate"
         )
 
+def install_dependencies():
+    """Cài đặt các thư viện từ requirements.txt sử dụng môi trường ảo nếu có."""
+    import sys
+    import os
+    
+    # Ưu tiên dùng python trong venv nếu có, nếu không thì dùng python đang chạy script
+    python_executable = sys.executable
+    project_root = os.getcwd()
+    venv_python = os.path.join(project_root, "venv", "bin", "python")
+
+    if os.path.exists(venv_python):
+        python_executable = venv_python
+    
+    command_str = f'"{python_executable}" -m pip install -r requirements.txt'
+    result = run_command(command_str)
+
+    if "Lỗi" not in result and "error" not in result.lower():
+        return f"✅ Đã cài đặt/cập nhật thành công các thư viện."
+    else:
+        return f"❌ Có lỗi xảy ra trong quá trình cài đặt.\n\nChi tiết:\n{result}"
+
 def show_recommended_extensions():
     """Trả về danh sách các extension VS Code được đề xuất."""
     return """Các extension VS Code được đề xuất cho lập trình Python:
@@ -253,3 +274,172 @@ def setup_vscode_project():
         return f"Đã tạo thành công bộ cấu hình VS Code tối ưu trong thư mục:\\n{vscode_dir}"
     except Exception as e:
         return f"Lỗi khi tạo tệp cấu hình: {e}"
+
+# --- Giao diện người dùng: Menu chính ---
+def main_menu():
+    """Hiển thị menu chính và xử lý lựa chọn của người dùng."""
+    import os
+
+    while True:
+        # Xóa màn hình terminal
+        os.system("clear" if os.name == "posix" else "cls")
+
+        print("🏠 Menu Chính - Công cụ Tối ưu Hóa MacOS & Dự án Python")
+        print("Chọn một tùy chọn để tiếp tục:")
+        print("1. 🚀 Tối ưu hóa MacOS")
+        print("2. 🛠️ Công cụ Dự án")
+        print("3. 📦 Cài đặt Thư viện")
+        print("4. ⚙️ Cài đặt VS Code")
+        print("0. ❌ Thoát")
+
+        choice = input("\nNhập số tùy chọn của bạn: ")
+
+        if choice == "1":
+            optimize_macos_menu()
+        elif choice == "2":
+            project_tools_menu()
+        elif choice == "3":
+            install_dependencies()
+        elif choice == "4":
+            setup_vscode_project()
+        elif choice == "0":
+            print("Cảm ơn bạn đã sử dụng công cụ này. Hẹn gặp lại!")
+            break
+        else:
+            input("Lựa chọn không hợp lệ. Nhấn Enter để tiếp tục...")
+
+# --- Tối ưu hóa MacOS ---
+def optimize_macos_menu():
+    """Menu con để tối ưu hóa MacOS."""
+    import os
+
+    while True:
+        os.system("clear" if os.name == "posix" else "cls")
+        print("🍏 Tối ưu hóa MacOS")
+        print("Chọn một tùy chọn để tiếp tục:")
+        print("1. Hiện/Ẩn tệp ẩn")
+        print("2. Đặt lại Dock về mặc định")
+        print("3. Tắt âm thanh chụp màn hình")
+        print("4. Kiểm tra GPU")
+        print("5. Chuyển đổi GPU rời/không rời")
+        print("6. Xóa bộ nhớ RAM cache")
+        print("7. Kiểm tra thời gian hoạt động")
+        print("8. Kiểm tra tiến trình đang chạy")
+        print("9. Kiểm tra thông tin pin")
+        print("10. Kiểm tra tốc độ mạng")
+        print("11. Kiểm tra thông tin hệ thống")
+        print("12. Kiểm tra phiên bản MacOS")
+        print("0. Quay lại menu chính")
+
+        choice = input("\nNhập số tùy chọn của bạn: ")
+
+        if choice == "1":
+            toggle_show_hidden_files()
+        elif choice == "2":
+            reset_dock()
+        elif choice == "3":
+            toggle_screenshot_sound()
+        elif choice == "4":
+            check_gpu()
+        elif choice == "5":
+            switch_gpu()
+        elif choice == "6":
+            purge_ram()
+        elif choice == "7":
+            check_uptime()
+        elif choice == "8":
+            check_processes()
+        elif choice == "9":
+            check_battery()
+        elif choice == "10":
+            network_speed()
+        elif choice == "11":
+            system_info()
+        elif choice == "12":
+            check_mac_version()
+        elif choice == "0":
+            break
+        else:
+            input("Lựa chọn không hợp lệ. Nhấn Enter để tiếp tục...")
+
+def toggle_show_hidden_files():
+    """Chuyển đổi giữa việc hiện và ẩn các tệp ẩn trong Finder."""
+    current_setting = run_command("defaults read com.apple.finder AppleShowAllFiles")
+    
+    if current_setting == "1":
+        hide_hidden()
+        print("✅ Đã ẩn các tệp ẩn.")
+    else:
+        show_hidden()
+        print("✅ Đã hiện các tệp ẩn.")
+
+    input("Nhấn Enter để tiếp tục...")
+
+def reset_dock():
+    """Đặt lại Dock về cài đặt mặc định."""
+    dock_reset()
+    print("✅ Đã đặt lại Dock về cài đặt mặc định.")
+    input("Nhấn Enter để tiếp tục...")
+
+def toggle_screenshot_sound():
+    """Bật hoặc tắt âm thanh chụp màn hình."""
+    current_setting = run_command("defaults read com.apple.screencapture disable-shadow")
+    
+    if current_setting == "1":
+        disable_screenshot_sound()
+        print("✅ Đã tắt âm thanh chụp màn hình.")
+    else:
+        run_command("defaults write com.apple.screencapture disable-shadow -bool false && killall SystemUIServer")
+        print("✅ Đã bật âm thanh chụp màn hình.")
+
+    input("Nhấn Enter để tiếp tục...")
+
+def switch_gpu():
+    """Chuyển đổi giữa GPU rời và không rời (nếu có nhiều GPU)."""
+    current_gpu = run_command("pmset -g | grep 'Graphics'")
+
+    if "Integrated" in current_gpu:
+        use_discrete_gpu()
+        print("✅ Đã chuyển sang sử dụng GPU rời.")
+    else:
+        use_integrated_gpu()
+        print("✅ Đã chuyển sang sử dụng GPU không rời.")
+
+    input("Nhấn Enter để tiếp tục...")
+
+# --- Công cụ Dự án ---
+def project_tools_menu():
+    """Menu con cho các công cụ dự án."""
+    import os
+
+    while True:
+        os.system("clear" if os.name == "posix" else "cls")
+        print("🛠️ Công cụ Dự án")
+        print("Chọn một tùy chọn để tiếp tục:")
+        print("1. Tạo Môi trường ảo")
+        print("2. Cài đặt Dependencies")
+        print("3. Cấu hình VS Code")
+        print("4. Gợi ý Extensions")
+        print("5. Cài Extensions Đề xuất")
+        print("0. Quay lại menu chính")
+
+        choice = input("\nNhập số tùy chọn của bạn: ")
+
+        if choice == "1":
+            print(create_virtual_environment())
+        elif choice == "2":
+            print(install_dependencies())
+        elif choice == "3":
+            print(setup_vscode_project())
+        elif choice == "4":
+            print(show_recommended_extensions())
+            input("Nhấn Enter để tiếp tục...")
+        elif choice == "5":
+            print(install_vscode_extensions())
+        elif choice == "0":
+            break
+        else:
+            input("Lựa chọn không hợp lệ. Nhấn Enter để tiếp tục...")
+
+# Khởi động chương trình
+main_menu()
