@@ -74,12 +74,27 @@ class MainApplication(tk.Tk):
         columns_frame.pack(fill=tk.BOTH, expand=True)
 
         sections = {
-            "📁 File & Folder": [("Hiện file ẩn", commands.show_hidden), ("Ẩn file ẩn", commands.hide_hidden), ("Liệt kê Desktop", commands.list_desktop)],
+            "� Tối ưu Hiệu năng": [
+                ("Giảm chuyển động & độ trong suốt", lambda: commands.reduce_motion(True) and commands.reduce_transparency(True)),
+                ("Bật Chế độ nguồn điện thấp", lambda: commands.low_power_mode(True)),
+                ("Mở Mục đăng nhập", commands.open_login_items),
+                ("Quản lý Dung lượng", commands.open_storage_management),
+                ("Mở Giám sát hoạt động", commands.open_activity_monitor),
+                ("Kiểm tra Tình trạng Pin", commands.check_battery_health),
+            ],
+            "�📁 File & Folder": [("Hiện file ẩn", commands.show_hidden), ("Ẩn file ẩn", commands.hide_hidden), ("Liệt kê Desktop", commands.list_desktop)],
             "🎮 GPU": [("Dùng GPU rời", commands.use_discrete_gpu), ("Dùng GPU tích hợp", commands.use_integrated_gpu), ("GPU tự động", commands.use_auto_gpu), ("Kiểm tra GPU", commands.check_gpu)],
             "🧠 RAM & Hệ thống": [("Dọn RAM", commands.purge_ram), ("Xem uptime", commands.check_uptime), ("Xem tiến trình", commands.check_processes), ("Kiểm tra pin", commands.check_battery), ("Tốc độ mạng", commands.network_speed), ("Thông tin máy", commands.system_info), ("Phiên bản macOS", commands.check_mac_version)],
             "📷 Ảnh màn hình": [("Lưu ảnh về Desktop", commands.set_screenshot_location), ("Định dạng JPG", commands.set_screenshot_format_jpg), ("Tắt âm chụp ảnh", commands.disable_screenshot_sound)],
             "🖥️ Dock": [("Tự ẩn Dock", commands.dock_autohide_on), ("Hiện Dock cố định", commands.dock_autohide_off), ("Khôi phục Dock", commands.dock_reset)],
-            "📡 Wi-Fi & Bluetooth": [("Bật Wi-Fi", commands.wifi_on), ("Tắt Wi-Fi", commands.wifi_off), ("Quét Wi-Fi", commands.wifi_scan), ("Bật Bluetooth", commands.bluetooth_on), ("Tắt Bluetooth", commands.bluetooth_off)],
+            "📡 Wi-Fi & Bluetooth": [
+                ("Kiểm tra 'blueutil'", commands.check_and_install_blueutil),
+                ("Bật Wi-Fi", commands.wifi_on), 
+                ("Tắt Wi-Fi", commands.wifi_off), 
+                ("Quét Wi-Fi", commands.wifi_scan), 
+                ("Bật Bluetooth", commands.bluetooth_on), 
+                ("Tắt Bluetooth", commands.bluetooth_off)
+            ],
             "🔊 Âm lượng & Web": [("Tăng âm lượng", commands.volume_up), ("Giảm âm lượng", commands.volume_down), ("Mở Google", commands.open_google)],
             "🛠️ Công cụ Dự án": [
                 ("Tạo Môi trường ảo", commands.create_virtual_environment),

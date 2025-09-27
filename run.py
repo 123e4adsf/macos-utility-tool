@@ -7,6 +7,7 @@ if project_root not in sys.path:
 
 try:
     from src.gui.main_window import main as start_gui
+
     start_gui()
 except ImportError as e:
     print("LỖI: Không thể khởi chạy ứng dụng. Có vẻ cấu trúc dự án bị sai.")
